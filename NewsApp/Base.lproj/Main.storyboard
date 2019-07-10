@@ -162,7 +162,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXp-CN-avQ" userLabel="Source">
                                                 <rect key="frame" x="0.0" y="59" width="398" height="23.5"/>
                                                 <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                                <nil key="textColor"/>
+                                                <color key="textColor" red="0.98431372549999996" green="0.71372549019999998" blue="0.070588235289999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlJ-Ea-oHF" userLabel="Description">
@@ -194,7 +194,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eWe-ra-e3K"/>
                     </view>
-                    <navigationItem key="navigationItem" id="GWg-iw-Mmc"/>
+                    <navigationItem key="navigationItem" id="GWg-iw-Mmc">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="qUk-xw-4eu">
+                            <connections>
+                                <action selector="click:" destination="6ct-WX-6jt" id="sui-XV-kPs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imgNews" destination="ukp-FN-9p5" id="M8O-aG-lyt"/>
                         <outlet property="lblAuthor" destination="rAr-4f-Sbv" id="ojI-Hd-nEE"/>
@@ -448,7 +454,7 @@
         <image name="ic-profile" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Pr4-rP-TlT"/>
+        <segue reference="yFa-vj-2Uc"/>
         <segue reference="jWU-1Z-h6y"/>
     </inferredMetricsTieBreakers>
 </document>

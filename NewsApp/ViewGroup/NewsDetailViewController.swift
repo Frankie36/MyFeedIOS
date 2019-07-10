@@ -38,14 +38,35 @@ class NewsDetailViewController: UIViewController {
             imageTransition: .crossDissolve(0.2)
         )
         
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        if let date = dateFormatterGet.date(from: newsArticle?.publishedAt ?? "2019-06-13T12:31:00Z") {
+            lblTimestamp.text = dateFormatterPrint.string(from: date)
+        } else {
+            print("There was an error decoding the string")
+        }
+        
         lblAuthor.text = newsArticle?.author
-        lblTimestamp.text = newsArticle?.publishedAt
+        //lblTimestamp.text = newsArticle?.publishedAt
         lblTitle.text = newsArticle?.title
         lblSource.text = newsArticle?.source.name
         lblDescription.text = newsArticle?.articleDescription
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func click(_ sender: Any) {
+        if let url = URL(string: newsArticle?.url ?? "https://www.buzzfeed.com/") {
+            if #available(iOS 10, *){
+                UIApplication.shared.open(url)
+            }else{
+                UIApplication.shared.openURL(url)
+            }
+            
+        }
+    }
     
     /*
      // MARK: - Navigation

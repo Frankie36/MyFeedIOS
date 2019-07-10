@@ -105,8 +105,19 @@ class AllNewsTableViewController: UITableViewController,UISearchBarDelegate {
             imageTransition: .crossDissolve(0.2)
         )
         
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        if let date = dateFormatterGet.date(from: articleList[indexPath.row].publishedAt) {
+            cell.lblTimeStamp.text = dateFormatterPrint.string(from: date)
+        } else {
+            print("There was an error decoding the string")
+        }
+        
         cell.lblSource.text = articleList[indexPath.row].source.name
-        cell.lblTimeStamp.text = articleList[indexPath.row].publishedAt
+        //cell.lblTimeStamp.text = articleList[indexPath.row].publishedAt
         cell.lblTitle.text = articleList[indexPath.row].title
         cell.lblContent.text = articleList[indexPath.row].content
         

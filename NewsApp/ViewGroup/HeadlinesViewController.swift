@@ -16,7 +16,7 @@ class HeadlinesViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tbNews: UITableView!
     var articleList = [ArticleData.Article]()
     var newsSelected: ArticleData.Article?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tbNews.delegate=self
@@ -38,14 +38,25 @@ class HeadlinesViewController: UIViewController, UITableViewDelegate, UITableVie
         )
         
         cell.imgStory!.af_setImage(
-            withURL: URL(string : articleList[indexPath.row].urlToImage ?? "https://www.grouphealth.ca/wp-content/uploads/2018/05/placeholder-image-300x225.png")!,
+            withURL: URL(string : articleList[indexPath.row].urlToImage ?? "https://islandproperty.vu/img/no-image.png")!,
             placeholderImage: placeholderImage,
             filter: filterStory,
             imageTransition: .crossDissolve(0.2)
         )
         
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd,yyyy"
+        
+        if let date = dateFormatterGet.date(from: articleList[indexPath.row].publishedAt) {
+            cell.lblTimeStamp.text = dateFormatterPrint.string(from: date)
+        } else {
+            print("There was an error decoding the string")
+        }
+        
         cell.lblSource.text = articleList[indexPath.row].source.name
-        cell.lblTimeStamp.text = articleList[indexPath.row].publishedAt
+        //cell.lblTimeStamp.text = articleList[indexPath.row].publishedAt
         cell.lblTitle.text = articleList[indexPath.row].title
         cell.lblContent.text = articleList[indexPath.row].content
         
@@ -77,27 +88,27 @@ class HeadlinesViewController: UIViewController, UITableViewDelegate, UITableVie
         //, parameters:[String:String]
         ) {
         Alamofire.request(url
-                          //,method: .get, parameters: parameters
+            //,method: .get, parameters: parameters
             ).responseJSON {response in
-            switch response.result {
-            case .success:
-                //let priceJson:JSON = JSON(response.result.value!)
-                do{
-                    let jsonDecoder = JSONDecoder()
-                    let faqItems = try! jsonDecoder.decode(ArticleData.NewsResponse.self, from: response.data!)
-                    print(faqItems)
-                    
-                    for (news) in faqItems.articles!{
-                        self.articleList.append(news)
+                switch response.result {
+                case .success:
+                    //let priceJson:JSON = JSON(response.result.value!)
+                    do{
+                        let jsonDecoder = JSONDecoder()
+                        let faqItems = try! jsonDecoder.decode(ArticleData.NewsResponse.self, from: response.data!)
+                        print(faqItems)
+                        
+                        for (news) in faqItems.articles!{
+                            self.articleList.append(news)
+                        }
+                        
+                        self.tbNews.reloadData()
+                        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                        
                     }
-                    
-                    self.tbNews.reloadData()
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
-
+                case .failure(let error):
+                    print(error)
                 }
-            case .failure(let error):
-                print(error)
-            }
         }
     }
     
@@ -118,6 +129,6 @@ class HeadlinesViewController: UIViewController, UITableViewDelegate, UITableVie
     //        }
     //    }
     
-
+    
 }
 
